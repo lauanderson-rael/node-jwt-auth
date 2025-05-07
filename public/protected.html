@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Área Protegida</title></head>
+<body>
+  <h2>Bem vindo aPágina Protegida</h2>
+  <div id="conteudo"></div>
+
+  <script>
+    async function verificarAcesso() {
+      const token = localStorage.getItem('token');
+      const res = await fetch('/protected', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('conteudo').innerText = data.message;
+      } else {
+        alert('Acesso negado');
+        window.location.href = '/';
+      }
+    }
+
+    verificarAcesso();
+  </script>
+</body>
+</html>
